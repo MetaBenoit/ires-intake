@@ -35,12 +35,12 @@ const statusLabel = (value) => {
   return status ? status.label : value;
 };
 
-function HotLeadsTab({ agentId, agentName }) {
+function HotLeadsTab({ agentId, agentName: _agentName }) {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedLeadId, setExpandedLeadId] = useState(null);
-  const [editingLeadId, setEditingLeadId] = useState(null);
+  const [, setEditingLeadId] = useState(null);
   const [editData, setEditData] = useState({});
   const [toastMsg, setToastMsg] = useState(null);
   const [lastSyncTime, setLastSyncTime] = useState(null);

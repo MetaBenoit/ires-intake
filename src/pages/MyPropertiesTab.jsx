@@ -4,7 +4,7 @@ import { supabase } from '../services/notes';
 const CATEGORY_ICON = { Condo: '🏢', House: '🏠', Land: '🌿', Project: '🏗️', Business: '💼' };
 const DEAL_COLOR = { Sell: '#de0372', Rent: '#0369a1' };
 
-function formatPrice(price, deal) {
+function formatPrice(price, _deal) {
   if (!price) return '—';
   const n = Number(price);
   if (n >= 1_000_000) return `฿${(n / 1_000_000).toFixed(1)}M`;
