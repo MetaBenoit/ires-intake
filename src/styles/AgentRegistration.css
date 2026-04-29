@@ -1,0 +1,177 @@
+/* Agent Registration Modal */
+.agent-registration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.agent-registration-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.registration-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.registration-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.registration-header p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.registration-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.registration-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fafafa;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.registration-form input:focus {
+  outline: 2px solid #de0372;
+  border-color: transparent;
+  background: white;
+}
+
+.registration-form input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Agent Suggestions */
+.agent-suggestions {
+  margin-top: 8px;
+}
+
+.suggestions-label {
+  margin: 0 0 8px 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.suggestion-btn {
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.suggestion-btn:hover:not(:disabled) {
+  background: #de0372;
+  color: white;
+  border-color: #de0372;
+}
+
+.suggestion-btn.selected {
+  background: #de0372;
+  color: white;
+  border-color: #de0372;
+}
+
+.suggestion-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.registration-error {
+  padding: 10px;
+  background: #ffebee;
+  border: 1px solid #f1a5a8;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Submit Button */
+.registration-submit {
+  padding: 12px;
+  background: #de0372;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s;
+  margin-top: 8px;
+}
+
+.registration-submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.registration-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.registration-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Info Note */
+.registration-note {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+  line-height: 1.4;
+}

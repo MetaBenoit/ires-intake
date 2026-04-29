@@ -1,0 +1,48 @@
+.wishlist-panel {
+  border-top: 1px solid #2a2a2a;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.wishlist-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.wishlist-title { color: #ccc; font-size: 0.88rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.wishlist-count {
+  background: #de0372; color: #fff;
+  border-radius: 10px; padding: 1px 7px;
+  font-size: 0.72rem; font-weight: 700;
+}
+.find-btn {
+  background: #de037218; color: #de0372;
+  border: 1px solid #de037240; border-radius: 8px;
+  padding: 5px 12px; font-size: 0.8rem;
+  font-weight: 600; cursor: pointer;
+}
+.find-btn:hover { background: #de037230; }
+.wishlist-loading, .wishlist-empty { color: #666; font-size: 0.82rem; margin: 8px 0; }
+
+.wishlist-card {
+  background: #1e1e1e; border-radius: 10px;
+  padding: 10px; margin-bottom: 8px;
+  border: 1px solid #2a2a2a;
+}
+.wc-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.wc-title { color: #e0e0e0; font-size: 0.85rem; font-weight: 500; flex: 1; }
+.wc-price { color: #de0372; font-weight: 700; font-size: 0.88rem; white-space: nowrap; }
+.wc-meta { font-size: 0.76rem; color: #777; display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+.wc-site { color: #999; font-weight: 500; }
+.wc-agent { font-size: 0.8rem; color: #bbb; display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+.wc-phone { color: #de0372; text-decoration: none; font-weight: 500; }
+.wc-note { font-size: 0.78rem; color: #777; font-style: italic; margin: 4px 0 0; }
+.wc-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.wc-open {
+  color: #888; text-decoration: none; font-size: 0.8rem;
+  background: #252525; border-radius: 6px; padding: 4px 10px;
+  border: 1px solid #333;
+}
+.wc-remove {
+  background: none; border: none; color: #555;
+  font-size: 1rem; cursor: pointer; padding: 4px 8px;
+}
+.wc-remove:hover { color: #f87171; }

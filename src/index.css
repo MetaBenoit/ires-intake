@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom component utilities */
+@layer components {
+  .intake-form {
+    @apply flex flex-col gap-4;
+  }
+
+  .intake-form input[type="text"],
+  .intake-form input[type="number"],
+  .intake-form input[type="datetime-local"],
+  .intake-form select,
+  .intake-form textarea {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ires-magenta focus:border-transparent;
+  }
+
+  .intake-form .row {
+    @apply flex gap-3;
+  }
+
+  .intake-form .row > input,
+  .intake-form .row > select,
+  .intake-form .row > label {
+    @apply flex-1;
+  }
+
+  .submit-btn {
+    @apply w-full py-3 bg-ires-magenta text-white font-semibold rounded-lg hover:bg-ires-magenta-dark disabled:opacity-60 transition-colors;
+  }
+
+  .success-banner {
+    @apply flex items-center justify-between gap-3 bg-green-50 border border-green-200 text-green-900 px-4 py-3 rounded-lg text-sm font-medium mb-4;
+  }
+
+  .dismiss-btn {
+    @apply bg-none border-none text-green-900 cursor-pointer text-lg leading-none;
+  }
+}
+
+/* Utility styles */
+.feedback-drawer-overlay {
+  @apply fixed inset-0 bg-black/50 flex items-end z-50;
+}
+
+.feedback-drawer {
+  @apply w-full bg-white rounded-t-2xl shadow-lg max-h-[80vh] overflow-y-auto;
+}
+
+.drawer-close {
+  @apply absolute top-4 right-4 bg-none border-none text-gray-400 hover:text-gray-600 cursor-pointer text-2xl leading-none;
+}
+
+.feedback-form {
+  @apply flex flex-col gap-4 p-6;
+}
+
+.feedback-select,
+.feedback-textarea {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ires-magenta;
+}
+
+.feedback-textarea {
+  @apply min-h-32;
+}
+
+.feedback-submit {
+  @apply w-full py-2 bg-ires-magenta text-white font-semibold rounded-lg hover:bg-ires-magenta-dark disabled:opacity-60 transition-colors;
+}

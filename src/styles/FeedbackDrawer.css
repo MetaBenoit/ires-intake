@@ -1,0 +1,138 @@
+/* Feedback Drawer — Reusable Module CSS */
+
+.feedback-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.feedback-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 360px;
+  height: 100vh;
+  background: white;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drawer-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.drawer-close:hover {
+  color: #333;
+}
+
+.feedback-drawer .feedback-form {
+  padding: 48px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback-drawer label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.feedback-drawer .feedback-select,
+.feedback-drawer .feedback-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.feedback-drawer .feedback-select:focus,
+.feedback-drawer .feedback-textarea:focus {
+  outline: 2px solid #de0372;
+  border-color: transparent;
+  background: white;
+}
+
+.feedback-drawer .feedback-select:disabled,
+.feedback-drawer .feedback-textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-drawer .feedback-textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.feedback-error {
+  padding: 10px;
+  background: #ffebee;
+  border: 1px solid #f1a5a8;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.feedback-drawer .feedback-submit {
+  margin-top: 4px;
+  padding: 10px;
+  background: #de0372;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+
+.feedback-drawer .feedback-submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.feedback-drawer .feedback-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.feedback-drawer .feedback-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
