@@ -3,7 +3,7 @@ import { getNotes, addNote, IRES_PWA_AGENTS } from '../services/notes';
 
 const NOTE_TYPE_LABELS = { note: '', bug: '🐛', feature: '✨', feedback: '💬' };
 
-function NotesPanel({ contextId, contextType = 'property_id', author = null, showTypes = false }) {
+function NotesPanel({ contextId, contextType = 'property_id', author = null, showTypes = false, hideForm = false }) {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newContent, setNewContent] = useState('');
@@ -100,7 +100,7 @@ function NotesPanel({ contextId, contextType = 'property_id', author = null, sho
         </div>
       )}
 
-      <form className="notes-form" onSubmit={handleAddNote}>
+      {!hideForm && <form className="notes-form" onSubmit={handleAddNote}>
         <div className="notes-form-row">
           <select
             value={selectedAuthor}
@@ -142,7 +142,7 @@ function NotesPanel({ contextId, contextType = 'property_id', author = null, sho
         >
           {submitting ? 'Saving…' : 'Add Note'}
         </button>
-      </form>
+      </form>}
     </div>
   );
 }

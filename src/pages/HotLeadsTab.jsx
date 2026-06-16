@@ -7,6 +7,7 @@ import {
 } from '../services/leadsService';
 import NewLeadModal from '../components/NewLeadModal';
 import NotesPanel from '../components/NotesPanel';
+import { addNote } from '../services/notes';
 
 // Status enum: what happened on the call
 const STATUS_OPTIONS = [
@@ -48,6 +49,7 @@ function HotLeadsTab({ agentId, agentName }) {
   const [syncing, setSyncing] = useState(false);
   const [offlineQueue, setOfflineQueue] = useState({});
   const [showNewLead, setShowNewLead] = useState(false);
+  const [notesRefresh, setNotesRefresh] = useState({}); // bump to refetch a lead's notes after save
 
   // Load assigned leads on mount
   useEffect(() => {
@@ -175,16 +177,27 @@ function HotLeadsTab({ agentId, agentName }) {
   const handleSaveEdit = async (leadId) => {
     const lead = leads.find(l => l.lead_id === leadId);
     const data = editData[leadId] || {};
-    // Status (call outcome) is no longer edited in the agent app; preserve
-    // whatever the lead already carries (Ming still sets it on the desk).
-    // Agents update intent + follow-up here; the call outcome goes in notes.
+
+    setSyncing(true);
+
+    // 1. Persist a new note if one was typed (shared ires.notes, context='lead'
+    //    so it appears on the desk too).
+    const noteText = (data.newNote || '').trim();
+    if (noteText) {
+      try {
+        await addNote({ context: 'lead', context_id: leadId, author: agentName || 'agent', content: noteText });
+      } catch (err) {
+        console.error('Error saving note:', err);
+      }
+    }
+
+    // 2. Update follow-up. Status + intent are not edited in the agent app;
+    //    preserve whatever the lead already carries (status is set on the desk).
     const payload = {
       contact_status: lead?.contact_status || 'new',
       next_follow_up: data.next_follow_up !== undefined ? data.next_follow_up : (lead?.next_follow_up || null),
-      intent_normalized: data.intent_normalized || lead?.intent_normalized || null,
+      intent_normalized: lead?.intent_normalized || null,
     };
-
-    setSyncing(true);
     const result = await updateLeadStatus(
       leadId,
       payload.contact_status,
@@ -194,12 +207,10 @@ function HotLeadsTab({ agentId, agentName }) {
 
     if (result.success) {
       setLeads(prev =>
-        prev.map(l =>
-          l.lead_id === leadId
-            ? { ...l, next_follow_up: payload.next_follow_up, intent_normalized: payload.intent_normalized }
-            : l
-        )
+        prev.map(l => (l.lead_id === leadId ? { ...l, next_follow_up: payload.next_follow_up } : l))
       );
+      setEditData(prev => ({ ...prev, [leadId]: { ...(prev[leadId] || {}), newNote: '' } }));
+      if (noteText) setNotesRefresh(prev => ({ ...prev, [leadId]: (prev[leadId] || 0) + 1 }));
       clearOfflineQueueItem(leadId);
       setEditingLeadId(null);
       showToast('✅ Lead updated');
@@ -324,34 +335,28 @@ function HotLeadsTab({ agentId, agentName }) {
 
               {expandedLeadId === lead.lead_id && (
                 <div className="lead-details">
+                  {/* Notes first: shared with the desk via ires.notes (context='lead'). */}
+                  <NotesPanel
+                    key={`notes-${lead.lead_id}-${notesRefresh[lead.lead_id] || 0}`}
+                    contextId={lead.lead_id}
+                    contextType="lead"
+                    hideForm
+                  />
+
                   <div className="detail-field">
-                    <label>Intent (What Lead Wants)</label>
-                    <div className="status-button-group">
-                      {INTENT_OPTIONS.map(
-                        intent => (
-                          <button
-                            key={intent.value}
-                            className={`status-button ${
-                              (editData[lead.lead_id]?.intent_normalized || lead.intent_normalized) ===
-                              intent.value
-                                ? 'active'
-                                : ''
-                            }`}
-                            onClick={() =>
-                              setEditData(prev => ({
-                                ...prev,
-                                [lead.lead_id]: {
-                                  ...(prev[lead.lead_id] || {}),
-                                  intent_normalized: intent.value,
-                                },
-                              }))
-                            }
-                          >
-                            {intent.label}
-                          </button>
-                        )
-                      )}
-                    </div>
+                    <label>Add a note</label>
+                    <textarea
+                      value={editData[lead.lead_id]?.newNote || ''}
+                      onChange={e =>
+                        setEditData(prev => ({
+                          ...prev,
+                          [lead.lead_id]: { ...(prev[lead.lead_id] || {}), newNote: e.target.value },
+                        }))
+                      }
+                      placeholder="Add a note…"
+                      className="notes-textarea"
+                      rows={2}
+                    />
                   </div>
 
                   <div className="detail-field">
@@ -380,28 +385,6 @@ function HotLeadsTab({ agentId, agentName }) {
                     />
                   </div>
 
-                  {lead.type && (
-                    <div className="detail-field">
-                      <label>Type</label>
-                      <p>{lead.type}</p>
-                    </div>
-                  )}
-
-                  {lead.area && (
-                    <div className="detail-field">
-                      <label>Area</label>
-                      <p>{lead.area}</p>
-                    </div>
-                  )}
-
-                  {lead.budget_max && (
-                    <div className="detail-field">
-                      <label>Budget</label>
-                      <p>฿{lead.budget_max.toLocaleString()}</p>
-                    </div>
-                  )}
-
-
                   <div className="actions">
                     <a
                       href={`https://wa.me/${(lead.phone_e164 || lead.phone_number || '').replace(/[^0-9]/g, '')}`}
@@ -427,11 +410,6 @@ function HotLeadsTab({ agentId, agentName }) {
                       {syncing ? '💾 Saving…' : '✓ Save'}
                     </button>
                   </div>
-
-                  {/* Shared lead notes: context='lead' matches the desk's
-                      NotesPanel, so notes written here appear in desk
-                      LeadDetail and vice versa (one ires.notes knowledge base). */}
-                  <NotesPanel contextId={lead.lead_id} contextType="lead" author={agentName} />
                 </div>
               )}
             </div>
