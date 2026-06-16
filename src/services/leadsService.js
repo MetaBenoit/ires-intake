@@ -26,6 +26,28 @@ export async function createAgentLead(data, agentId) {
   return result;
 }
 
+// ─── Work-attempt logging ─────────────────────────────────────────────────────
+/**
+ * Log an agent work-attempt (WhatsApp / Call button click) on a lead.
+ * Fire-and-forget: it must NEVER throw or await-block, so the contact link
+ * (wa.me / tel:) always opens even if logging fails. Feeds the desk report's
+ * per-agent "called" metric (ires.agent_activity).
+ * @param {{leadId: string, action: 'whatsapp'|'call', agentId?: string, agentName?: string}} a
+ */
+export function logLeadAction({ leadId, action, agentId, agentName }) {
+  if (!leadId || !action) return;
+  supabase
+    .from('lead_actions')
+    .insert([{
+      lead_id:    leadId,
+      agent_id:   agentId || localStorage.getItem('ires_agent_id') || null,
+      agent_name: agentName || null,
+      action,
+    }])
+    .then(({ error }) => { if (error) console.error('logLeadAction failed:', error.message); })
+    .catch((err) => console.error('logLeadAction failed:', err));
+}
+
 // ─── Lead Wishlist ────────────────────────────────────────────────────────────
 export async function getLeadWishlist(leadId) {
   const { data, error } = await supabase

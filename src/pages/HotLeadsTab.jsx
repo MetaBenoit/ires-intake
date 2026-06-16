@@ -4,6 +4,7 @@ import {
   subscribeToAssignedLeads,
   updateLeadStatus,
   retryPendingEdits,
+  logLeadAction,
 } from '../services/leadsService';
 import NewLeadModal from '../components/NewLeadModal';
 import NotesPanel from '../components/NotesPanel';
@@ -392,6 +393,7 @@ function HotLeadsTab({ agentId, agentName }) {
                       rel="noopener noreferrer"
                       className="call-button"
                       style={{ pointerEvents: (lead.phone_e164 || lead.phone_number) ? 'auto' : 'none', opacity: (lead.phone_e164 || lead.phone_number) ? 1 : 0.5 }}
+                      onClick={() => logLeadAction({ leadId: lead.lead_id, action: 'whatsapp', agentId, agentName })}
                     >
                       💬 WhatsApp
                     </a>
@@ -399,6 +401,7 @@ function HotLeadsTab({ agentId, agentName }) {
                       href={`tel:${lead.phone_e164 || lead.phone_number || ''}`}
                       className="call-button call-button--phone"
                       style={{ pointerEvents: (lead.phone_e164 || lead.phone_number) ? 'auto' : 'none', opacity: (lead.phone_e164 || lead.phone_number) ? 1 : 0.5 }}
+                      onClick={() => logLeadAction({ leadId: lead.lead_id, action: 'call', agentId, agentName })}
                     >
                       📞 Call
                     </a>
