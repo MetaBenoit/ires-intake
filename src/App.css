@@ -269,6 +269,22 @@ input[type="range"] {
   margin-bottom: -8px; /* tighten gap to grid */
 }
 
+/* IRES logo tick box under the photos (same wording as Desk) */
+.watermark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #444;
+  min-height: 44px;
+  cursor: pointer;
+}
+.watermark-toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: #de0372;
+}
+
 /* 3×2 photo grid */
 .photo-grid {
   display: grid;

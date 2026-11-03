@@ -12,6 +12,7 @@ const INITIAL_FORM = {
   agent_notes: '',
   lat: '',
   lng: '',
+  watermark: false,
 };
 
 const EMPTY_IMAGES = [null, null, null, null, null, null];

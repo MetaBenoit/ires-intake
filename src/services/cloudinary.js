@@ -1,5 +1,7 @@
 const CLOUDINARY_CLOUD  = 'dgzf3jipr';
-const CLOUDINARY_PRESET = 'ires_watermarked';
+// Photos are stored clean; the IRES logo is a per-listing choice (form tick
+// box), applied as the t_ires_wm delivery transformation. Same as Desk.
+const CLOUDINARY_PRESET = 'ires_clean';
 
 export async function uploadOneImage(file) {
   const fd = new FormData();

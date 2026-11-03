@@ -240,6 +240,15 @@ function App() {
                 onClearSlot={clearSlot}
               />
 
+              <label className="watermark-toggle">
+                <input
+                  type="checkbox"
+                  checked={formData.watermark}
+                  onChange={(e) => handleChange({ target: { name: 'watermark', value: e.target.checked } })}
+                />
+                Add the IRES logo to the photos
+              </label>
+
               <button type="submit" className="submit-btn" disabled={isSubmitting}>
                 {isSubmitting ? `⏳ ${submitPhase || 'Working…'}` : 'Create Property Entry'}
               </button>
